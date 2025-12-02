@@ -1,0 +1,62 @@
+{% extends 'blog/base.html' %}
+
+{% block contenido %}
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h1>Bienvenido a nuestro Blog</h1>
+            <p class="lead">Las últimas novedades del mundo tech</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+    <div class="col-md-12">
+        <div class="btn-group shadow-sm" role="group" aria-label="Filtros de Orden">
+            
+            <a href="?orden=reciente" class="btn btn-outline-primary {% if orden_actual == 'reciente' %}active{% endif %}">
+                📅 Más Recientes
+            </a>
+            
+            <a href="?orden=antiguo" class="btn btn-outline-primary {% if orden_actual == 'antiguo' %}active{% endif %}">
+                ⏳ Más Antiguos
+            </a>
+            
+            <a href="?orden=titulo_az" class="btn btn-outline-primary {% if orden_actual == 'titulo_az' %}active{% endif %}">
+                🔤 A-Z
+            </a>
+            
+            <a href="?orden=titulo_za" class="btn btn-outline-primary {% if orden_actual == 'titulo_za' %}active{% endif %}">
+                🔠 Z-A
+            </a>
+
+        </div>
+    </div>
+</div>
+
+    <div class="row">
+        {% for articulo in articulos %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    {% if articulo.imagen %}
+                        <img src="{{ articulo.imagen.url }}" class="card-img-top" alt="{{ articulo.titulo }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-secondary text-white d-flex justify-content-center align-items-center" style="height: 200px;">
+                            Sin imagen
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ articulo.titulo }}</h5>
+                        <p class="card-text">{{ articulo.contenido|truncatewords:20 }}</p>
+<a href="{% url 'detalle_articulo' articulo.id %}" class="btn btn-primary btn-sm">Leer más</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Publicado: {{ articulo.fecha_publicacion|date:"d M Y" }}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">Aún no hay artículos publicados. ¡Sé el primero!</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

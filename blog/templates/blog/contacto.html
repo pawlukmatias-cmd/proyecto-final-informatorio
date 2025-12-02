@@ -1,0 +1,54 @@
+{% extends 'blog/base.html' %}
+
+{% block contenido %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white text-center">
+                <h2 class="mb-0">Contáctanos</h2>
+            </div>
+            <div class="card-body p-4">
+                
+                {% if mensaje_exito %}
+                    <div class="alert alert-success text-center">
+                        <h4>¡Gracias por escribirnos!</h4>
+                        <p>Hemos recibido tu mensaje y te responderemos a la brevedad.</p>
+                        <a href="{% url 'inicio' %}" class="btn btn-outline-success">Volver al Inicio</a>
+                    </div>
+                {% else %}
+                    <p class="text-center mb-4">
+                        ¿Tienes alguna duda o sugerencia? Completa el formulario y nos pondremos en contacto.
+                    </p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Nombre Completo</label>
+                            {{ form.nombre }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Correo Electrónico</label>
+                            {{ form.email }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Tu Mensaje</label>
+                            {{ form.mensaje }}
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Enviar Mensaje</button>
+                        </div>
+                    </form>
+                {% endif %}
+                
+            </div>
+            <div class="card-footer text-muted text-center">
+                También puedes escribirnos a info@bloginformatorio.com
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'blog/base.html' %}
+
+{% block contenido %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <h1 class="mb-3">{{ articulo.titulo }}</h1>
+        <p class="text-muted">
+            Por <strong>{{ articulo.autor.username }}</strong> | 
+            {{ articulo.fecha_publicacion|date:"d M Y" }} | 
+            <span class="badge bg-secondary">{{ articulo.categoria.nombre }}</span>
+        </p>
+
+        {% if articulo.imagen %}
+            <img src="{{ articulo.imagen.url }}" class="img-fluid rounded mb-4 w-100" alt="{{ articulo.titulo }}">
+        {% endif %}
+
+        <div class="mb-5">
+            <p class="lead">{{ articulo.subtitulo }}</p>
+            <hr>
+            {{ articulo.contenido|linebreaks }}
+        </div>
+
+        {% if user == articulo.autor or user.is_superuser %}
+            <div class="d-flex gap-2 mb-4">
+                <a href="{% url 'editar_articulo' articulo.id %}" class="btn btn-warning">✏️ Editar</a>
+                <a href="{% url 'eliminar_articulo' articulo.id %}" class="btn btn-danger">🗑️ Eliminar</a>
+            </div>
+        {% endif %}
+        <div class="card bg-light">
+            <div class="card-body">
+                <h3>Comentarios ({{ comentarios.count }})</h3>
+                <hr>
+                
+        {% for comentario in comentarios %}
+            <div class="mb-3 border-bottom pb-2">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <strong>{{ comentario.usuario.username }}</strong> 
+                        <small class="text-muted"> - {{ comentario.fecha|date:"d/m/Y H:i" }}</small>
+                
+                {% if comentario.usuario.tipo == 'COLABORADOR' %}
+                    <span class="badge bg-primary py-0" style="font-size: 0.7em;">Colaborador</span>
+                {% endif %}
+            </div>
+            
+            <div>
+                {% if user == comentario.usuario %}
+                    <a href="{% url 'editar_comentario' comentario.id %}" class="text-warning text-decoration-none me-2" style="font-size: 0.9em;">✏️ Editar</a>
+                {% endif %}
+                
+                {% if user == comentario.usuario or user.tipo == 'COLABORADOR' or user.is_superuser %}
+                    <a href="{% url 'borrar_comentario' comentario.id %}" class="text-danger text-decoration-none" style="font-size: 0.9em;">🗑️ Borrar</a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <p class="mt-2">{{ comentario.texto }}</p>
+    </div>
+{% empty %}
+    <p>No hay comentarios aún. ¡Sé el primero en opinar!</p>
+{% endfor %}
+                
+                <div class="mt-4">
+                    {% if user.is_authenticated %}
+                    <h5>Dejar un comentario</h5>
+                    <form action="{% url 'agregar_comentario' articulo.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <textarea name="texto" class="form-control" rows="3" placeholder="Escribe tu opinión..." required></textarea>
+                </div>
+            <button type="submit" class="btn btn-primary btn-sm">Comentar</button>
+        </form>
+    {% else %}
+        <div class="alert alert-info">
+            <a href="{% url 'login' %}">Inicia sesión</a> o <a href="{% url 'registro' %}">regístrate</a> para comentar.
+        </div>
+    {% endif %}
+</div>
+            </div>
+        </div>
+        
+        <div class="mt-4 mb-5">
+            <a href="{% url 'inicio' %}" class="btn btn-outline-dark">Volver al Inicio</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

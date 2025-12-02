@@ -1,0 +1,16 @@
+# Habilitar scripts
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Activar el entorno
+.\venv\Scripts\Activate
+
+# Generar el archivo de dependencias
+pip freeze > requirements.txt
+
+# Iniciar servidor 
+python manage.py runserver
+
+# URL pagina
+General: http://127.0.0.1:8000/
+Admin: http://127.0.0.1:8000/admin/
+Contacto: http://127.0.0.1:8000/contacto/

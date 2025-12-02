@@ -1,0 +1,13 @@
+# Ignorar base de datos local (crearemos una nueva en el servidor)
+db.sqlite3
+
+# Ignorar entorno virtual (muy importante)
+venv/
+env/
+
+# Ignorar archivos compilados de Python
+__pycache__/
+*.pyc
+
+# Ignorar archivos de media (las fotos de prueba locales no se suben)
+media/

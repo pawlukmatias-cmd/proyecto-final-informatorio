@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+
+{% block contenido %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card border-danger shadow">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">⚠️ ¿Estás seguro?</h4>
+            </div>
+            <div class="card-body text-center">
+                <p class="lead">Estás a punto de eliminar el artículo:</p>
+                <h3 class="fw-bold">{{ articulo.titulo }}</h3>
+                <p class="text-muted small">Esta acción no se puede deshacer.</p>
+                
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-lg">Sí, Eliminar</button>
+                    <a href="{% url 'detalle_articulo' articulo.id %}" class="btn btn-secondary btn-lg">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
