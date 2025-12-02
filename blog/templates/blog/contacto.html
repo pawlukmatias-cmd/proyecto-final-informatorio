@@ -1,54 +1,65 @@
 {% extends 'blog/base.html' %}
+{% load static %}
+
+{% block fondo_personalizado %}
+    background: url('{% static "img/fondo_contacto.jpg" %}') no-repeat center center fixed;
+    background-size: cover;
+{% endblock %}
 
 {% block contenido %}
-<div class="row justify-content-center mt-5">
-    <div class="col-md-8">
-        <div class="card shadow">
-            <div class="card-header bg-dark text-white text-center">
-                <h2 class="mb-0">Contáctanos</h2>
+
+<div class="row justify-content-center mt-5 mb-5">
+    <div class="col-md-8 col-lg-6">
+        
+        <div class="p-4 p-md-5 rounded-4 shadow-lg border border-secondary border-opacity-25" 
+             style="background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);">
+            
+            <div class="text-center mb-4">
+                <h6 class="text-uppercase text-warning fw-bold ls-2">¿Tienes dudas?</h6>
+                <h2 class="display-5 fw-bold text-white">Escríbenos</h2>
             </div>
-            <div class="card-body p-4">
-                
-                {% if mensaje_exito %}
-                    <div class="alert alert-success text-center">
-                        <h4>¡Gracias por escribirnos!</h4>
-                        <p>Hemos recibido tu mensaje y te responderemos a la brevedad.</p>
-                        <a href="{% url 'inicio' %}" class="btn btn-outline-success">Volver al Inicio</a>
-                    </div>
-                {% else %}
-                    <p class="text-center mb-4">
-                        ¿Tienes alguna duda o sugerencia? Completa el formulario y nos pondremos en contacto.
-                    </p>
+
+            {% if mensaje_exito %}
+                <div class="alert alert-success text-center shadow-sm border-0" role="alert">
+                    <h4 class="alert-heading fw-bold">¡Mensaje Enviado! 🚀</h4>
+                    <p>Gracias por contactarnos. Te responderemos a la brevedad.</p>
+                    <hr>
+                    <a href="{% url 'inicio' %}" class="btn btn-success btn-sm">Volver al Inicio</a>
+                </div>
+            {% else %}
+                <form method="post">
+                    {% csrf_token %}
                     
-                    <form method="post">
-                        {% csrf_token %}
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Nombre Completo</label>
-                            {{ form.nombre }}
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Correo Electrónico</label>
-                            {{ form.email }}
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Tu Mensaje</label>
-                            {{ form.mensaje }}
-                        </div>
-                        
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg">Enviar Mensaje</button>
-                        </div>
-                    </form>
-                {% endif %}
-                
-            </div>
-            <div class="card-footer text-muted text-center">
-                También puedes escribirnos a info@bloginformatorio.com
-            </div>
+                    <div class="mb-3">
+                        <label class="form-label text-white-50 fw-bold small">NOMBRE COMPLETO</label>
+                        {{ form.nombre }} 
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label text-white-50 fw-bold small">CORREO ELECTRÓNICO</label>
+                        {{ form.email }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label text-white-50 fw-bold small">TU MENSAJE</label>
+                        {{ form.mensaje }}
+                    </div>
+                    
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-warning btn-lg fw-bold text-dark rounded-pill shadow">
+                            ✉️ Enviar Mensaje
+                        </button>
+                    </div>
+                </form>
+
+                <div class="text-center mt-4 border-top border-secondary border-opacity-50 pt-3">
+                    <p class="text-white-50 small mb-0">También puedes escribirnos directo a:</p>
+                    <a href="mailto:pawlukmatias@gmail.com" class="text-warning text-decoration-none fw-bold">pawlukmatias@gmail.com</a>
+                </div>
+            {% endif %}
+            
         </div>
     </div>
 </div>
+
 {% endblock %}

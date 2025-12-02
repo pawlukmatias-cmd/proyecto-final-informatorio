@@ -1,0 +1,94 @@
+/* Importamos una fuente moderna desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
+:root {
+    /* Tu paleta de colores personalizada */
+    --color-principal: #2c3e50; /* Un azul oscuro elegante */
+    --color-secundario: #e74c3c; /* Un rojo vibrante para detalles */
+    --fondo-suave: #f8f9fa;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: url('../img/fondo_web.jpg') no-repeat center center fixed;
+    background-size: cover;
+    
+    min-height: 100vh;      
+    display: flex;          
+    flex-direction: column; 
+}
+
+/* Títulos con tipografía diferente */
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+/* Navbar Personalizada */
+.navbar {
+    background: var(--color-principal) !important; /* Sobreescribimos a Bootstrap */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+/* Tarjetas de Artículos (Cards) */
+.card {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Se levanta un poco al pasar el mouse */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.card-img-top {
+    transition: transform 0.5s ease;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.05); /* Zoom suave en la imagen */
+}
+
+/* Botones personalizados */
+.btn-primary {
+    background-color: var(--color-principal);
+    border-color: var(--color-principal);
+}
+
+.btn-primary:hover {
+    background-color: #1a252f;
+    border-color: #1a252f;
+}
+
+/* Footer bonito */
+footer {
+    background-color: #2c3e50 !important;
+    color: white !important;
+}
+
+footer p {
+    color: rgba(255,255,255,0.7) !important; /* Texto gris claro */
+}
+
+/* Espaciado elegante para subtítulos */
+.ls-2 {
+    letter-spacing: 2px;
+}
+
+/* Inputs semitransparentes para el efecto Dark Mode */
+.form-control {
+    background-color: rgba(255, 255, 255, 0.9); 
+    border: none;
+}
+
+.form-control:focus {
+    background-color: #ffffff; 
+    box-shadow: 0 0 0 0.25rem rgba(231, 76, 60, 0.25);
+}

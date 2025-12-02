@@ -1,31 +1,59 @@
 {% extends 'blog/base.html' %}
+{% load static %}
+
+{% block fondo_personalizado %}
+    background: url('{% static "img/fondo_acerca_de.jpg" %}') no-repeat center center fixed;
+    background-size: cover;
+{% endblock %}
 
 {% block contenido %}
-<div class="row align-items-center mt-5">
-    <div class="col-md-6">
-        <h1 class="display-4 fw-bold">Sobre Nosotros</h1>
-        <p class="lead text-muted">Compartiendo conocimiento y tecnología con la comunidad.</p>
-        <hr>
-        <p>
-            Bienvenido al <strong>Blog Informatorio</strong>. Este proyecto nació como parte del curso de Desarrollo Web 2025, con el objetivo de crear un espacio donde desarrolladores, estudiantes y entusiastas de la tecnología puedan compartir sus experiencias.
-        </p>
-        <p>
-            Nuestra misión es fomentar el aprendizaje colaborativo a través de artículos de calidad, tutoriales y discusiones constructivas en nuestra comunidad.
-        </p>
-        
-        <h5 class="mt-4">Nuestro Equipo</h5>
-        <ul class="list-unstyled">
-            <li>💻 <strong>Desarrollador:</strong> Matias Emanuel Pawluk</li>
-            <li>🚀 <strong>Mentoría:</strong> Informatorio Chaco</li>
-            <li>🎨 <strong>Diseño:</strong> Bootstrap 5 & Django</li>
-        </ul>
-    </div>
 
-    <div class="col-md-6 text-center">
-        <div class="p-5 bg-light rounded-3 shadow-sm border">
-            <div style="font-size: 10rem;">👨‍💻</div>
-            <p class="mt-3 text-muted fst-italic">"El código es poesía lógica"</p>
+<div class="row align-items-center justify-content-center mt-5 mb-5">
+    
+    <div class="col-lg-10">
+        <div class="p-5 rounded-4 shadow-lg border border-secondary border-opacity-25" 
+             style="background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);">
+            
+            <div class="row align-items-center">
+                
+                <div class="col-md-7 mb-4 mb-md-0">
+                    <h6 class="text-uppercase text-warning fw-bold ls-2 mb-3">Nuestra Misión</h6>
+                    <h1 class="display-4 fw-bold text-white mb-4">Compartiendo Conocimiento</h1>
+                    
+                    <p class="lead text-white-50">
+                        Bienvenido al <strong>Blog Informatorio</strong>. Este espacio nació con el objetivo de conectar desarrolladores y estudiantes.
+                    </p>
+                    <hr class="border-secondary border-opacity-50 my-4">
+                    
+                    <p class="text-white-50">
+                        Creemos que la mejor forma de aprender es enseñando. Aquí encontrarás tutoriales, experiencias y las últimas novedades del mundo tech, curadas por nuestra comunidad.
+                    </p>
+
+                    <h5 class="text-white mt-4 mb-3">El Equipo</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2">💻 <strong>Desarrollo:</strong> Django & Python</li>
+                        <li class="mb-2">🎨 <strong>Diseño:</strong> Bootstrap 5 + Glassmorphism</li>
+                        <li>🚀 <strong>Impulsado por:</strong> Informatorio Chaco 2025</li>
+                    </ul>
+                    
+                    <a href="{% url 'contacto' %}" class="btn btn-outline-light mt-4 rounded-pill px-4">
+                        Únete al equipo →
+                    </a>
+                </div>
+
+                <div class="col-md-5 text-center">
+                    <div class="p-4 rounded-circle shadow-lg d-inline-block" 
+                         style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.1);">
+                        <div style="font-size: 8rem;">🚀</div>
+                    </div>
+                    <p class="mt-3 text-white-50 fst-italic small">"El código es el lenguaje del futuro"</p>
+                </div>
+
+            </div>
+
         </div>
     </div>
+
 </div>
+
 {% endblock %}

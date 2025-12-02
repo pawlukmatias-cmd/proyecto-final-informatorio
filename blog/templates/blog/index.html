@@ -1,62 +1,94 @@
 {% extends 'blog/base.html' %}
+{% load static %}
+
+{% block fondo_personalizado %}
+    background: url('{% static "img/fondo_inicio.jpg" %}') no-repeat center center fixed;
+    background-size: cover;
+{% endblock %}
 
 {% block contenido %}
-    <div class="row">
-        <div class="col-12 text-center mb-5">
-            <h1>Bienvenido a nuestro Blog</h1>
-            <p class="lead">Las últimas novedades del mundo tech</p>
-        </div>
-    </div>
 
-    <div class="row mb-4">
-    <div class="col-md-12">
-        <div class="btn-group shadow-sm" role="group" aria-label="Filtros de Orden">
+    <div class="row mb-5 mt-4">
+        <div class="col-lg-8 mx-auto text-center">
             
-            <a href="?orden=reciente" class="btn btn-outline-primary {% if orden_actual == 'reciente' %}active{% endif %}">
-                📅 Más Recientes
-            </a>
-            
-            <a href="?orden=antiguo" class="btn btn-outline-primary {% if orden_actual == 'antiguo' %}active{% endif %}">
-                ⏳ Más Antiguos
-            </a>
-            
-            <a href="?orden=titulo_az" class="btn btn-outline-primary {% if orden_actual == 'titulo_az' %}active{% endif %}">
-                🔤 A-Z
-            </a>
-            
-            <a href="?orden=titulo_za" class="btn btn-outline-primary {% if orden_actual == 'titulo_za' %}active{% endif %}">
-                🔠 Z-A
-            </a>
+            <div class="p-5 rounded-4 shadow-lg border border-secondary border-opacity-25" 
+                 style="background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px);">
+                
+                {% if categoria_seleccionada %}
+                    <h6 class="text-uppercase text-warning fw-bold mb-3 ls-2">Categoría</h6>
+                    <h1 class="display-3 fw-bold text-white mb-0">{{ categoria_seleccionada.nombre }}</h1>
+                    <a href="{% url 'inicio' %}" class="btn btn-outline-light mt-4 rounded-pill px-4">
+                        ← Ver todo
+                    </a>
+                {% else %}
+                    <h6 class="text-uppercase text-warning fw-bold mb-3 ls-2">Desarrollo & Tecnología</h6>
+                    <h1 class="display-3 fw-bold text-white mb-2">Blog Informatorio</h1>
+                    <p class="lead text-white-50 mx-auto" style="max-width: 600px;">
+                        Bienvenido al espacio donde compartimos código, tutoriales y experiencias.
+                    </p>
+                {% endif %}
+            </div>
 
         </div>
     </div>
-</div>
+
+    <div class="row mb-5">
+        <div class="col-12 d-flex justify-content-center">
+            
+            <div class="p-2 rounded-3 shadow" style="background-color: rgba(0, 0, 0, 0.8);">
+                <span class="text-white-50 me-2 fw-bold small align-middle">ORDENAR POR:</span>
+                
+                <div class="btn-group" role="group" aria-label="Filtros de Orden">
+                    <a href="?orden=reciente" class="btn btn-sm btn-outline-light {% if orden_actual == 'reciente' %}active{% endif %}">📅 Recientes</a>
+                    <a href="?orden=antiguo" class="btn btn-sm btn-outline-light {% if orden_actual == 'antiguo' %}active{% endif %}">⏳ Antiguos</a>
+                    <a href="?orden=titulo_az" class="btn btn-sm btn-outline-light {% if orden_actual == 'titulo_az' %}active{% endif %}">🔤 A-Z</a>
+                    <a href="?orden=titulo_za" class="btn btn-sm btn-outline-light {% if orden_actual == 'titulo_za' %}active{% endif %}">🔠 Z-A</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <div class="row">
         {% for articulo in articulos %}
             <div class="col-md-4 mb-4">
-                <div class="card h-100">
+                <div class="card h-100 shadow-sm">
                     {% if articulo.imagen %}
                         <img src="{{ articulo.imagen.url }}" class="card-img-top" alt="{{ articulo.titulo }}" style="height: 200px; object-fit: cover;">
                     {% else %}
                         <div class="bg-secondary text-white d-flex justify-content-center align-items-center" style="height: 200px;">
-                            Sin imagen
+                            <span class="fs-1">📷</span>
                         </div>
                     {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ articulo.titulo }}</h5>
-                        <p class="card-text">{{ articulo.contenido|truncatewords:20 }}</p>
-<a href="{% url 'detalle_articulo' articulo.id %}" class="btn btn-primary btn-sm">Leer más</a>
+                    
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2">
+                            <span class="badge bg-primary">{{ articulo.categoria.nombre }}</span>
+                        </div>
+                        <h5 class="card-title fw-bold text-dark">{{ articulo.titulo }}</h5>
+                        <p class="card-text text-muted small">{{ articulo.subtitulo|default:articulo.contenido|truncatewords:15 }}</p>
+                        
+                        <div class="mt-auto pt-3">
+                            <a href="{% url 'detalle_articulo' articulo.id %}" class="btn btn-outline-dark w-100">Leer más</a>
+                        </div>
                     </div>
-                    <div class="card-footer text-muted">
-                        Publicado: {{ articulo.fecha_publicacion|date:"d M Y" }}
+                    
+                    <div class="card-footer text-muted small bg-white border-top-0">
+                        <div class="d-flex justify-content-between">
+                            <span>✍️ {{ articulo.autor.username }}</span>
+                            <span>📅 {{ articulo.fecha_publicacion|date:"d M" }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         {% empty %}
-            <div class="col-12">
-                <div class="alert alert-info">Aún no hay artículos publicados. ¡Sé el primero!</div>
+            <div class="col-12 text-center">
+                <div class="alert alert-info shadow-sm" style="background-color: rgba(255,255,255,0.9);">
+                    <h4>No hay artículos publicados aún.</h4>
+                    <p>¡Sé el primero en compartir algo interesante!</p>
+                </div>
             </div>
         {% endfor %}
     </div>
+
 {% endblock %}

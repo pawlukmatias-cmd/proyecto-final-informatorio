@@ -1,32 +1,60 @@
 {% extends 'blog/base.html' %}
+{% load static %}
+
+{% block fondo_personalizado %}
+    /* Puedes cambiar fondo_registro.jpg por la imagen que prefieras */
+    background: url('{% static "img/fondo_login.jpg" %}') no-repeat center center fixed;
+    background-size: cover;
+{% endblock %}
 
 {% block contenido %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card mt-5">
-            <div class="card-header bg-success text-white">
-                <h4 class="mb-0">Crear Cuenta Nueva</h4>
+<div class="row justify-content-center mt-5 mb-5">
+    <div class="col-md-6 col-lg-5">
+        
+        <div class="p-4 p-md-5 rounded-4 shadow-lg border border-secondary border-opacity-25" 
+             style="background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);">
+
+            <div class="text-center mb-4">
+                <h6 class="text-uppercase text-warning fw-bold ls-2">Bienvenido</h6>
+                <h2 class="fw-bold text-white">Crear Cuenta</h2>
+                <p class="text-white-50 small">Únete a nuestra comunidad de desarrolladores</p>
             </div>
-            <div class="card-body">
-                <form method="post">
-                    {% csrf_token %}
+
+            <form method="post">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label text-white-50 fw-bold small">{{ field.label|upper }}</label>
                     
-                    {% for field in form %}
-                        <div class="mb-3">
-                            <label class="form-label">{{ field.label }}</label>
-                            {{ field }} 
-                            {% if field.help_text %}
-                                <small class="form-text text-muted d-block">{{ field.help_text }}</small>
-                            {% endif %}
-                            {% for error in field.errors %}
-                                <div class="text-danger small">{{ error }}</div>
-                            {% endfor %}
-                        </div>
+                    {{ field }}
+                    
+                    {% if field.help_text %}
+                        <small class="form-text text-white-50 d-block mt-1" style="font-size: 0.75em;">
+                            {{ field.help_text }}
+                        </small>
+                    {% endif %}
+                    
+                    {% for error in field.errors %}
+                        <div class="text-danger small mt-1 fw-bold">{{ error }}</div>
                     {% endfor %}
-                    
-                    <button type="submit" class="btn btn-success w-100">Registrarse</button>
-                </form>
+                </div>
+                {% endfor %}
+                
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-success btn-lg fw-bold rounded-pill shadow">
+                        ✨ Registrarme
+                    </button>
+                </div>
+            </form>
+            
+            <div class="text-center mt-4 pt-3 border-top border-secondary border-opacity-50">
+                <p class="text-white-50 mb-0 small">¿Ya tienes una cuenta?</p>
+                <a href="{% url 'login' %}" class="text-warning fw-bold text-decoration-none">
+                    Iniciar Sesión →
+                </a>
             </div>
+
         </div>
     </div>
 </div>

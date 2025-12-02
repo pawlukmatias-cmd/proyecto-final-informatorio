@@ -1,36 +1,62 @@
 {% extends 'blog/base.html' %}
+{% load static %}
+
+{% block fondo_personalizado %}
+    background: url('{% static "img/fondo_publicar.jpg" %}') no-repeat center center fixed;
+    background-size: cover;
+{% endblock %}
 
 {% block contenido %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow">
-            <div class="card-header bg-primary text-white">
-                <h3 class="mb-0">
-                    {% if es_edicion %}Editar Artículo{% else %}Publicar Nuevo Artículo{% endif %}
+<div class="row justify-content-center mt-5 mb-5">
+    <div class="col-md-8 col-lg-7">
+        
+        <div class="p-4 p-md-5 rounded-4 shadow-lg border border-secondary border-opacity-25" 
+             style="background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);">
+            
+            <div class="text-center mb-4">
+                <h6 class="text-uppercase text-warning fw-bold ls-2">Zona de Colaboradores</h6>
+                <h3 class="display-6 fw-bold text-white">
+                    {% if es_edicion %}Editar Artículo{% else %}Nueva Publicación{% endif %}
                 </h3>
             </div>
-            <div class="card-body">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    
-                    {% for field in form %}
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">{{ field.label }}</label>
-                            {{ field }}
-                            {% if field.errors %}
-                                <div class="text-danger small">{{ field.errors }}</div>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
+            
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label text-white-50 fw-bold small">TÍTULO DEL ARTÍCULO</label>
+                    {{ form.titulo }}
+                    {% if form.titulo.errors %}<div class="text-danger small">{{ form.titulo.errors }}</div>{% endif %}
+                </div>
 
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-success btn-lg">
-                            {% if es_edicion %}Guardar Cambios{% else %}Publicar Artículo{% endif %}
-                        </button>
-                        <a href="{% url 'inicio' %}" class="btn btn-secondary">Cancelar</a>
-                    </div>
-                </form>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label text-white-50 fw-bold small">SUBTÍTULO (Breve descripción)</label>
+                    {{ form.subtitulo }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-white-50 fw-bold small">CATEGORÍA</label>
+                    {{ form.categoria }}
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-white-50 fw-bold small">IMAGEN DE PORTADA</label>
+                    {{ form.imagen }}
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-white-50 fw-bold small">CONTENIDO</label>
+                    {{ form.contenido }}
+                </div>
+
+                <div class="d-grid gap-2 pt-2">
+                    <button type="submit" class="btn btn-success btn-lg fw-bold shadow">
+                        {% if es_edicion %}💾 Guardar Cambios{% else %}🚀 Publicar Ahora{% endif %}
+                    </button>
+                    <a href="{% url 'inicio' %}" class="btn btn-outline-light">Cancelar</a>
+                </div>
+            </form>
+            
         </div>
     </div>
 </div>
