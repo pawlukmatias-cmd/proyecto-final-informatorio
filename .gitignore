@@ -11,3 +11,6 @@ __pycache__/
 
 # Ignorar archivos de media (las fotos de prueba locales no se suben)
 media/
+
+# Ignorar codigos mios
+Informacion.txt
