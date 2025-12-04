@@ -8,7 +8,7 @@
 
 {% block contenido %}
 
-    <div class="row mb-5 mt-4">
+    <div class="row mb-4 mt-4">
         <div class="col-lg-8 mx-auto text-center">
             
             <div class="p-5 rounded-4 shadow-lg border border-secondary border-opacity-25" 
@@ -22,10 +22,17 @@
                     </a>
                 {% else %}
                     <h6 class="text-uppercase text-warning fw-bold mb-3 ls-2">Desarrollo & Tecnología</h6>
-                    <h1 class="display-3 fw-bold text-white mb-2">Blog Informatorio</h1>
-                    <p class="lead text-white-50 mx-auto" style="max-width: 600px;">
-                        Bienvenido al espacio donde compartimos código, tutoriales y experiencias.
-                    </p>
+                    <h1 class="display-3 fw-bold text-white mb-3">Blog Informatorio</h1>
+                    
+                    <form method="get" action="{% url 'inicio' %}" class="d-flex justify-content-center mt-4 mb-3 mx-auto" style="max-width: 500px;">
+                        <input type="hidden" name="orden" value="{{ orden_actual }}">
+                        
+                        <div class="input-group">
+                            <input type="text" name="buscar" class="form-control border-0" placeholder="Buscar artículo..." value="{{ busqueda_actual|default:'' }}" style="opacity: 0.9;">
+                            <button class="btn btn-warning fw-bold" type="submit">🔍 Buscar</button>
+                        </div>
+                    </form>
+
                 {% endif %}
             </div>
 
@@ -38,11 +45,11 @@
             <div class="p-2 rounded-3 shadow" style="background-color: rgba(0, 0, 0, 0.8);">
                 <span class="text-white-50 me-2 fw-bold small align-middle">ORDENAR POR:</span>
                 
-                <div class="btn-group" role="group" aria-label="Filtros de Orden">
-                    <a href="?orden=reciente" class="btn btn-sm btn-outline-light {% if orden_actual == 'reciente' %}active{% endif %}">📅 Recientes</a>
-                    <a href="?orden=antiguo" class="btn btn-sm btn-outline-light {% if orden_actual == 'antiguo' %}active{% endif %}">⏳ Antiguos</a>
-                    <a href="?orden=titulo_az" class="btn btn-sm btn-outline-light {% if orden_actual == 'titulo_az' %}active{% endif %}">🔤 A-Z</a>
-                    <a href="?orden=titulo_za" class="btn btn-sm btn-outline-light {% if orden_actual == 'titulo_za' %}active{% endif %}">🔠 Z-A</a>
+                <div class="btn-group" role="group">
+                    <a href="?orden=reciente&buscar={{ busqueda_actual|default:'' }}" class="btn btn-sm btn-outline-light {% if orden_actual == 'reciente' %}active{% endif %}">📅 Recientes</a>
+                    <a href="?orden=antiguo&buscar={{ busqueda_actual|default:'' }}" class="btn btn-sm btn-outline-light {% if orden_actual == 'antiguo' %}active{% endif %}">⏳ Antiguos</a>
+                    <a href="?orden=titulo_az&buscar={{ busqueda_actual|default:'' }}" class="btn btn-sm btn-outline-light {% if orden_actual == 'titulo_az' %}active{% endif %}">🔤 A-Z</a>
+                    <a href="?orden=titulo_za&buscar={{ busqueda_actual|default:'' }}" class="btn btn-sm btn-outline-light {% if orden_actual == 'titulo_za' %}active{% endif %}">🔠 Z-A</a>
                 </div>
             </div>
 
@@ -50,9 +57,9 @@
     </div>
 
     <div class="row">
-        {% for articulo in articulos %}
+        {% for articulo in page_obj %}
             <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
+                <div class="card h-100 shadow-sm border-0">
                     {% if articulo.imagen %}
                         <img src="{{ articulo.imagen.url }}" class="card-img-top" alt="{{ articulo.titulo }}" style="height: 200px; object-fit: cover;">
                     {% else %}
@@ -84,11 +91,49 @@
         {% empty %}
             <div class="col-12 text-center">
                 <div class="alert alert-info shadow-sm" style="background-color: rgba(255,255,255,0.9);">
-                    <h4>No hay artículos publicados aún.</h4>
-                    <p>¡Sé el primero en compartir algo interesante!</p>
+                    {% if busqueda_actual %}
+                        <h4>No encontramos nada relacionado con "{{ busqueda_actual }}".</h4>
+                        <a href="{% url 'inicio' %}" class="btn btn-link">Ver todos los artículos</a>
+                    {% else %}
+                        <h4>No hay artículos publicados aún.</h4>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
     </div>
+
+    {% if page_obj.has_other_pages %}
+    <div class="row mt-4 mb-5">
+        <div class="col-12 d-flex justify-content-center">
+            <nav aria-label="Navegación del blog">
+                <ul class="pagination pagination-lg">
+                    
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link bg-dark text-white border-secondary" href="?page={{ page_obj.previous_page_number }}&orden={{ orden_actual }}&buscar={{ busqueda_actual|default:'' }}">
+                                &laquo; Anterior
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    <li class="page-item disabled">
+                        <span class="page-link bg-secondary text-white border-secondary">
+                            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+                        </span>
+                    </li>
+                    
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link bg-dark text-white border-secondary" href="?page={{ page_obj.next_page_number }}&orden={{ orden_actual }}&buscar={{ busqueda_actual|default:'' }}">
+                                Siguiente &raquo;
+                            </a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
 
 {% endblock %}
