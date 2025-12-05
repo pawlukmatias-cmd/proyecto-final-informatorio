@@ -29,7 +29,10 @@
             {% endif %}
 
             <div class="article-content text-white lead mb-5" style="font-family: 'Open Sans', sans-serif;">
+                {% if articulo.subtitulo %}
                 <p class="fw-bold text-warning">{{ articulo.subtitulo }}</p> 
+                {% endif %}
+                
                 {{ articulo.contenido|linebreaks }}
             </div>
 
