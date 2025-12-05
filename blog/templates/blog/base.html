@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Informatorio</title>
+    <title>Blog Automotor</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
@@ -15,13 +15,25 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container flex-grow-1">
-            <a class="navbar-brand" href="{% url 'inicio' %}">Blog Info</a>
+            <a class="navbar-brand" href="{% url 'inicio' %}">Blog Automotor</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="{% url 'inicio' %}">Inicio</a></li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Categorías
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'lista_por_categoria' 'novedades' %}">Novedades</a></li>
+                            <li><a class="dropdown-item" href="{% url 'lista_por_categoria' 'opiniones' %}">Opiniones</a></li>
+                            <li><a class="dropdown-item" href="{% url 'lista_por_categoria' 'consultas' %}">Consultas</a></li>
+                            <li><a class="dropdown-item" href="{% url 'lista_por_categoria' 'info' %}">Info</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'acerca_de' %}">Acerca de</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
                     
@@ -54,7 +66,8 @@
         </div>
     </nav>
 
-    <div class="container">{% if messages %}
+    <div class="container">
+        {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-3" role="alert">
                     {{ message }}
@@ -66,7 +79,9 @@
         {% block contenido %}
         {% endblock %}
 
-    </div> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </div> 
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     {% block scripts %}
     {% endblock %}

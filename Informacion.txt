@@ -16,4 +16,5 @@ Admin: http://127.0.0.1:8000/admin/
 Contacto: http://127.0.0.1:8000/contacto/
 
 # En Pythonanywhere:
+General: https://pawlukmatias.pythonanywhere.com
 Admin: https://pawlukmatias.pythonanywhere.com/admin/

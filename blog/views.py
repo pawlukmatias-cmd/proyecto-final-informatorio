@@ -5,7 +5,6 @@ from django.db.models import Q
 from .models import Articulo, Categoria, Comentario
 from .forms import ArticuloForm, ComentarioForm, ContactoForm
 
-# Página de inicio
 def inicio(request):
     orden = request.GET.get('orden', 'reciente')
     buscar = request.GET.get('buscar')
@@ -38,11 +37,16 @@ def inicio(request):
     }
     return render(request, 'blog/index.html', contexto)
 
-def lista_por_categoria(request, categoria_id):
-    categoria = get_object_or_404(Categoria, id=categoria_id)
+def lista_por_categoria(request, nombre_categoria):
+    categoria = get_object_or_404(Categoria, nombre__iexact=nombre_categoria)
     articulos = Articulo.objects.filter(categoria=categoria)
+    
+    paginator = Paginator(articulos, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
     contexto = {
-        'articulos': articulos,
+        'page_obj': page_obj,
         'categoria_seleccionada': categoria
     }
     return render(request, 'blog/index.html', contexto)

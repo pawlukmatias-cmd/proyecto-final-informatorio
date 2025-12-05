@@ -3,7 +3,7 @@
   "model": "blog.categoria",
   "pk": 2,
   "fields": {
-    "nombre": "Aportes"
+    "nombre": "Opiniones"
   }
 },
 {
@@ -17,14 +17,14 @@
   "model": "blog.categoria",
   "pk": 5,
   "fields": {
-    "nombre": "Otros"
+    "nombre": "Consultas"
   }
 },
 {
   "model": "blog.categoria",
   "pk": 6,
   "fields": {
-    "nombre": "Consultas"
+    "nombre": "Info"
   }
 }
 ]

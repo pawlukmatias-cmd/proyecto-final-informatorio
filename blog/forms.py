@@ -5,7 +5,6 @@ class ArticuloForm(forms.ModelForm):
     class Meta:
         model = Articulo
         fields = ['titulo', 'subtitulo', 'contenido', 'imagen', 'categoria']
-        # Estilo Bootstrap a los inputs
         widgets = {
             'titulo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título del artículo'}),
             'subtitulo': forms.TextInput(attrs={'class': 'form-control'}),

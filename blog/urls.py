@@ -6,11 +6,8 @@ urlpatterns = [
     path('acerca-de/', views.acerca_de, name='acerca_de'),
     path('contacto/', views.contacto, name='contacto'),
     path('', views.inicio, name='inicio'),
-    path('categoria/<int:categoria_id>/', views.lista_por_categoria, name='lista_por_categoria'),
-    
-    # Nueva ruta para leer articulos nuevos
+    path('categoria/<str:nombre_categoria>/', views.lista_por_categoria, name='lista_por_categoria'),
     path('articulo/<int:id>/', views.detalle_articulo, name='detalle_articulo'),
-    
     path('acerca-de/', views.acerca_de, name='acerca_de'),
     path('contacto/', views.contacto, name='contacto'),
     path('crear/', views.crear_articulo, name='crear_articulo'),
