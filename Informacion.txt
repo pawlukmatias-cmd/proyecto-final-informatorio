@@ -18,3 +18,6 @@ Contacto: http://127.0.0.1:8000/contacto/
 # En Pythonanywhere:
 General: https://pawlukmatias.pythonanywhere.com
 Admin: https://pawlukmatias.pythonanywhere.com/admin/
+Activar entorno: source .virtualenvs/mi_entorno/bin/activate
+Acceder Carpeta: cd proyecto-final-informatorio/
+Ejecutar cambios: git pull origin main
